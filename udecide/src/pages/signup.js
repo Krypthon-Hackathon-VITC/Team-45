@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import img1 from "../assets/login-bg.jpg";
 import {AiFillEyeInvisible,AiFillEye} from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  
+  const navigate = useNavigate ();
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    navigate('/home')
+    
 
     const emailRegex = /^\S+@\S+\.\S+$/;
     // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -18,6 +25,7 @@ const Signup = () => {
       alert('Please enter a valid email address.');
       return;
     }
+
 
     // if (!passwordRegex.test(password)) {
     //   alert('Password must be at least 8 characters long and contain at least one letter and one number.');
