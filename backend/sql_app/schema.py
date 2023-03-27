@@ -7,6 +7,10 @@ class UserCreate(UserBase):
     username: str
     password: str
 
+class UserFetch(BaseModel):
+    username: str
+    password: str
+
 class User(UserBase):
     id: int
 

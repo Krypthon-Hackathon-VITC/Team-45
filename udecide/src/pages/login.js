@@ -11,24 +11,24 @@ const Login = () => {
     event.preventDefault();
 
     // Make HTTP request to server-side endpoint to authenticate user
-    // fetch('/login', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ email, password }),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     if (data.success) {
-    //       // User is authenticated, do something
-    //       console.log('User authenticated');
-    //     } else {
-    //       // User is not authenticated, prompt to register
-    //       alert('Invalid email or password. Please register if you are not already a user.');
-    //     }
-    //   })
-    //   .catch(error => console.error(error));
+    fetch('http://127.0.0.1:8000/check_user/', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // User is authenticated, do something
+          console.log('User authenticated');
+        } else {
+          // User is not authenticated, prompt to register
+          alert('Invalid email or password. Please register if you are not already a user.');
+        }
+      })
+      .catch(error => console.error(error));
   };
   console.log("username:", username);
   console.log("password:", password);
