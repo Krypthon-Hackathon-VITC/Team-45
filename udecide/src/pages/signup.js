@@ -10,29 +10,29 @@ const Signup = () => {
     event.preventDefault();
 
     const emailRegex = /^\S+@\S+\.\S+$/;
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     if (!emailRegex.test(email)) {
       alert('Please enter a valid email address.');
       return;
     }
 
-    if (!passwordRegex.test(password)) {
-      alert('Password must be at least 8 characters long and contain at least one letter and one number.');
-      return;
-    }
+    // if (!passwordRegex.test(password)) {
+    //   alert('Password must be at least 8 characters long and contain at least one letter and one number.');
+    //   return;
+    // }
 
     // Make HTTP request to server-side endpoint
-    //     fetch("/register", {
-    //       method: "POST",
-    //       body: JSON.stringify({ username, email, password }),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     })
-    //       .then((response) => response.json())
-    //       .then((data) => console.log(data))
-    //       .catch((error) => console.error(error));
+        fetch("http://127.0.0.1:8000/users/", {
+          method: "POST",
+          body: JSON.stringify({ username, email, password }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.error(error));
 
     console.log("username:", username);
     console.log("email:", email);
