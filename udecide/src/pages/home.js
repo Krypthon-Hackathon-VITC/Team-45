@@ -33,7 +33,7 @@ const Home = () => {
           </div>
         </div>
         <div className="hidden sm:block rounded-lg">
-          <img className=" w-full h-full object-cover" src={img2} alt="" />
+          <img className=" w-full h-full object-contain" src={img2} alt="" />
         </div>
       </div>
     </>

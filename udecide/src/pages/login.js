@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import img from "../assets/signup-bg.jpg";
+import { useNavigate } from "react-router-dom";
 import {AiFillEyeInvisible,AiFillEye} from 'react-icons/ai'
 
 const Login = () => {
@@ -7,8 +8,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigate = useNavigate ();
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    // navigate('/home')
 
     // Make HTTP request to server-side endpoint to authenticate user
     fetch('http://127.0.0.1:8000/check_user/', {
@@ -22,6 +26,7 @@ const Login = () => {
       .then(data => {
         if (data.success) {
           // User is authenticated, do something
+          navigate('/home')
           console.log('User authenticated');
         } else {
           // User is not authenticated, prompt to register
