@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from . import crud, models, schema
 from . database import SessionLocal, engine
+from fastapi.openapi.models import Response
 
 # from passlib.context import CryptContext
 
@@ -45,3 +46,10 @@ def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
     if db_user_email:
         raise HTTPException(status_code=400, detail="Email Already Existing!")
     return crud.create_user(db=db, user=user)
+
+@app.post("/check_user/")
+def login_user(user: schema.UserFetch, db: Session = Depends(get_db)):
+    if(crud.check_user(db, user)):
+        return {"success": "true"}
+    else:
+        Response.status_code = 400

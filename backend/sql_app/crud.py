@@ -17,3 +17,9 @@ def create_user(db: Session, user: schema.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def check_user(db:Session, user: schema.UserFetch):
+    if (db.query(models.User).filter(models.User.username == user.username) and db.query(models.User).filter(models.User.password == pwd_context.hash(user.password))):
+        return True
+    else:
+        return False
