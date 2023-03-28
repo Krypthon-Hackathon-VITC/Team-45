@@ -3,13 +3,20 @@ from pydantic import UUID4, ValidationError
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 
+
 from . import crud, models, schema
 from . database import SessionLocal, engine
 from fastapi.openapi.models import Response
 import shutil
 import io
+import numpy as np
+import cv2
+import torch
+from matplotlib import pyplot as plt
+from paddleocr import PaddleOCR,draw_ocr
+from . utils import get_cropped_image, extract_aadhaar_info
 
-# from passlib.context import CryptContext
+from passlib.context import CryptContext
 
 models.Base.metadata.create_all(bind = engine)
 
@@ -28,6 +35,38 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+model = torch.hub.load('ultralytics/yolov5', 'custom', path = './sql_app/150-epochs-best.pt', force_reload = True)
+ocr = PaddleOCR(use_angle_cls=True, lang='en') # need to run only once to download and load model into memory
+names = ['aadhar card', 'driving license', 'pan card', 'salary slip', 'voter id']
+
+
+def give_detection_results(image):
+    image = cv2.resize(image, (640, 640))
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    results = model(image)
+    print(results)
+    # return results
+    print(results)
+    bbox = results.xyxy[0][0]
+    cropped_image = get_cropped_image(image, bbox)
+    detected_class = int(results.xyxy[0][0][-1])
+    detected_class = names[detected_class]
+    cropped_image = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2RGB)
+    result = ocr.ocr(cropped_image, cls=True)
+    extraction = ""
+    for idx in range(len(result)):
+        res = result[idx]
+        for line in res:
+            extraction += line[-1][0]
+            extraction += '\n'
+    print(extraction)
+
+    # info = extract_aadhaar_info(extraction)
+
+    return extraction
+
+
 
 #Dependency
 def get_db():
@@ -60,5 +99,14 @@ def login_user(user: schema.UserFetch, db: Session = Depends(get_db)):
 def add_image(file: UploadFile = File(...)):
     with open(f'{file.filename}', 'wb') as buffer:
         shutil.copyfileobj(file.file, buffer)
+        print(buffer)
+        
+        img = cv2.imread(buffer.name)
+        print(img)
+        info = give_detection_results(img)
+        print(info)
 
-    return {"Upload Image Status": "completed"}
+
+    return {"Upload Image Status": "Success"}
+
+
