@@ -10,7 +10,7 @@ const Home = () => {
     navigate("/upload_page");
   };
   const handleWebUpload = () => {
-    navigate("/webcam_page");
+    navigate("/webcamupload_page");
   };
   return (
     <>
