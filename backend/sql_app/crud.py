@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
+from fastapi import Depends, HTTPException, status
+import io
 
 from .import models, schema
 
@@ -24,3 +26,13 @@ def check_user(db: Session, user: schema.UserFetch):
         return True
     else:
         return False
+    
+
+# def create_image(db: Session, image: schema.ImgData):
+#     with io.BytesIO(image.data) as f:
+#         image_data = f.read()
+#     db_image = models.Image(name=image.name, data=image_data)
+#     db.add(db_image)
+#     db.commit()
+#     db.refresh(db_image)
+#     return db_image

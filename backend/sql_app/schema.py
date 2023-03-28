@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Optional
 
 class UserBase(BaseModel):
     email: str
@@ -16,3 +17,17 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+# class ImgCreate(BaseModel):
+#     name: str
+
+# class ImgData(ImgCreate):
+#     data: Optional[bytes] = Field(..., description="Binary Data of Image File")
+
+# class Img(ImgCreate):
+#     id: int
+#     # name: str
+#     # owner_username: str
+
+#     class Config:
+#         orm_mode = True

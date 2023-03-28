@@ -1,15 +1,28 @@
-from sqlalchemy import Boolean, String, Integer, Column, ForeignKey
+from sqlalchemy import Boolean, String, Integer, Column, ForeignKey, LargeBinary
 from sqlalchemy.orm import relationship
 
 from .database import Base
 
 class User(Base):
-    __tablename__ = "New User"
+    __tablename__ = "users"
 
-    id = Column(Integer, primary_key = True, index = True)
-    username = Column(String, unique=True, index = True)
+    id = Column(Integer, index = True)
+    username = Column(String, primary_key = True, unique=True, index = True)
     email = Column(String, unique=True, index = True, nullable = False)
     password = Column(String, nullable = False)
+
+    # images = relationship("AddImg", back_populates = "owner")
+
+# class AddImg(Base):
+#     __tablename__ = "images"
+
+#     id = Column(Integer, primary_key = True, index = True)
+#     name = Column(String(100), nullable = False)
+#     data = Column(LargeBinary)
+    # owner_username = Column(String, ForeignKey('users.username'))
+
+    # owner = relationship("User", back_populates = "AddImg")
+    
 
 # class Details_adhaar(Base):
 #     __tablename__ = "Extracted Details For Adhaar Card"
