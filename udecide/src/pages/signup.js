@@ -15,7 +15,7 @@ const Signup = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    navigate('/home')
+    navigate('/login')
     
 
     const emailRegex = /^\S+@\S+\.\S+$/;

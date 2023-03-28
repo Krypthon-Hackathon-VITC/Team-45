@@ -68,23 +68,22 @@ const Navbar = () => {
           }
         >
           <ul>
-            <li className="text-3xl font-bold">Paymate</li>
+            <li className="text-3xl font-bold">uDecide</li>
             <li className="p-4 font-bold text-1xl border-b">
               <a href="/user">Home</a>
             </li>
             <li className="p-4 font-bold text-1xl border-b">
-              <a href="/analysis">Analysis</a>
+              <a href="/analysis">KYC</a>
             </li>
             <li className="p-4 font-bold text-1xl border-b">
-              <a href="/rooms">Rooms</a>
+              <a href="/rooms">About</a>
             </li>
-            <li className="p-4 font-bold text-1xl border-b">About Us</li>
           </ul>
-          <div className="flex flex-col pb-4">
+          {/* <div className="flex flex-col pb-4">
             <button className="p-3 border bg-gradient-to-r from-purple-600 to-purple-400 text-white rounded-md">
               ACCOUNT
             </button>
-          </div>
+          </div> */}
           <div className="flex justify-between my-3">
             <FaFacebook className="icon text-2xl cursor-pointer " />
             <FaInstagram className="icon text-2xl cursor-pointer " />
