@@ -18,26 +18,70 @@ def get_cropped_image(image, bounding_box):
     return cropped_image
 
 
-def extract_aadhaar_info(extraction):
+def extract_details_from_aadhar(text):
+    text_list = text.split(" ")
+    try:
+        text_list.pop(text_list.index("Government"))
+        text_list.pop(text_list.index("of"))
+        text_list.pop(text_list.index("India"))
+        text_list.pop(text_list.index("Issue"))
+        text_list.pop(text_list.index("Download"))
+        text_list.pop(text_list.index("Date"))
+        text_list.pop(text_list.index("Name"))
+    except Exception as e:
+        print(e)
+    text = " ".join(text_list)
     
-    # Define the sample string
-    # string = "Government of IndiaThakor Alpeshbhai/DOB10/12/1997yt/Male5692 7255 2643"
+    # name
+    match = re.search(r'\b[A-Z][a-z]+\s+[A-Z][a-z]+\s+[A-Z][a-z]+\b', text)
+    if match:
+        name = match.group()
+        # print(name)  # Output: Harsh Kumar Jain
+    else:
+        match = re.search(r'\b[A-Z][a-z]+\s[A-Z][a-z]+\b', text)
+        if match:
+            name = match.group()
+            # print(name)
+        else:
+            name = "No name detected"
 
-    # Define the regex pattern to extract the name, date of birth, gender, and the last sequence of numbers
-    pattern = r"(?<=India)(\w+\s\w+)/DOB(\d{2}/\d{2}/\d{4})\w+/(\w+)(\d+ \d+ \d+)"
+    # extract date of birth
+    date = "No date"
+    text_list_for_date = text.split(" ")
+    for i in text_list:
+        if 'DOB' in i:
+            date = i
+    
 
-    # Use the search() method to extract the matched pattern from the string
-    match = re.search(pattern, extraction)
 
-    # Extract the matched groups
-    name = match.group(1)
-    dob = match.group(2)
-    gender = match.group(3)
-    numbers = match.group(4)
+    # extract gender
+
+    if 'Male' in text:
+        gender = 'Male'
+    else:
+        gender = 'Female'
+
+    # extract Aadhar number
+    aadhar_pattern = r"\d{4} \d{4} \d{4}"
+    aadhar_match = re.search(aadhar_pattern, text)
+    if aadhar_match:
+        aadhar_number = aadhar_match.group(0)
+    else:
+        aadhar_pattern = r"\d{12}"
+        aadhar_match = re.search(aadhar_pattern, text)
+        if aadhar_match:
+            aadhar_number = aadhar_match.group(0)
+        else:
+            aadhar_number = "No data extracted"
+
+    print("Name:", name)
+    print("Date of Birth:", date)
+    print("Gender:", gender)
+    print("Aadhar Number:", aadhar_number)
     
     return {
-        "Name": name,
-        "Date of birth": dob,
-        "Gender": gender,
-        "Numbers": numbers
+        "name" : name,
+        "dob" : date,
+        "gender" : gender,
+        "aadhaar_number" : aadhar_number
     }

@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
 from pydantic import UUID4, ValidationError
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
+from typing import List
 
 
 from . import crud, models, schema
@@ -14,7 +15,7 @@ import cv2
 import torch
 from matplotlib import pyplot as plt
 from paddleocr import PaddleOCR,draw_ocr
-from . utils import get_cropped_image, extract_aadhaar_info
+from . utils import get_cropped_image, extract_details_from_aadhar
 
 from passlib.context import CryptContext
 
@@ -59,12 +60,12 @@ def give_detection_results(image):
         res = result[idx]
         for line in res:
             extraction += line[-1][0]
-            extraction += '\n'
+            extraction += ' '
     print(extraction)
 
-    # info = extract_aadhaar_info(extraction)
+    info = extract_details_from_aadhar(extraction)
 
-    return extraction
+    return info
 
 
 
@@ -107,6 +108,24 @@ def add_image(file: UploadFile = File(...)):
         print(info)
 
 
-    return {"Upload Image Status": "Success"}
+    return {"Upload Image Status": info}
+
+
+@app.post("/img")
+def upload_img(files: List[UploadFile] = File(...)):
+    file_and_data = {}
+    for file in files:
+        with open(f'{file.filename}', "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+            print(buffer)
+        
+            img = cv2.imread(buffer.name)
+            # print(img)
+            info = give_detection_results(img)
+
+            file_and_data[f'{buffer.name}'] = info
+            
+
+    return {"filename": file_and_data}
 
 
