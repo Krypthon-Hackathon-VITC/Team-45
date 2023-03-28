@@ -26,7 +26,7 @@ const UploadFile = () => {
           formData.append('file', file);
         }
         try {
-          const response = await fetch('http://127.0.0.1:8000/upload_img/', {
+          const response = await fetch('http://127.0.0.1:8000/img', {
             method: 'POST',
             body: formData,
           });
