@@ -26,7 +26,7 @@ const Signup = () => {
       return;
     }
     else{
-      navigate('/login')
+      navigate('/appform')
     }
 
 
@@ -115,7 +115,7 @@ const Signup = () => {
         </form>
       </div>
       <div className="hidden  xl:block rounded-lg">
-        <img className=" w-full h-full object-cover" src={img1} alt="" />
+        <img className=" w-full h-screen object-cover" src={img1} alt="" />
       </div>
     </div>
   );
