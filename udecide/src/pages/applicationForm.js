@@ -3,7 +3,7 @@ import img from "../assets/appform-bg.jpeg";
 import { useNavigate } from "react-router-dom";
 
 
-const ApplicationForm = () => {
+const ApplicationForm = ({sharedState, onStateChange}) => {
     const [fullname, setFullname] = useState("");
     const [dob, setDob] = useState("");
     const [phoneno, setPhoneNo] = useState("");
@@ -16,18 +16,21 @@ const ApplicationForm = () => {
     const handleSubmit = (event) => {
       event.preventDefault();
       navigate('/home')
+
+      const name = {name:fullname,dob:dob,phoneno:phoneno,aadhar:aadharno,pancard:panno}
+      onStateChange(name)
   
       // Make HTTP request to server-side endpoint
-          fetch("http://127.0.0.1:8000/users/", {
-            method: "POST",
-            body: JSON.stringify({ fullname, dob, phoneno, aadharno, panno }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error(error));
+        //   fetch("http://127.0.0.1:8000/users/", {
+        //     method: "POST",
+        //     body: JSON.stringify({ fullname, dob, phoneno, aadharno, panno }),
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   })
+        //     .then((response) => response.json())
+        //     .then((data) => console.log(data))
+        //     .catch((error) => console.error(error));
   
     
     };

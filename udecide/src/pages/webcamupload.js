@@ -29,16 +29,17 @@ const WebCam = () => {
             <div className=" text-center">
               <div className=" grid grid-cols-4 gap-3 mt-5 px-4 py-2">
                 {webData.map((image, index) => (
-                  <div className="">
+                  <div className=" border-[2px] border-indigo-600 rounded-lg">
                     <img
                       src={image}
                       key={index}
                       alt={`Captured image ${index}`}
+                      className=' object-contain'
                     />
                   </div>
                 ))}
               </div>
-              <div className=" border mt-4 px-10 w-[100%] mx-auto py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold ">
+              <div className=" border mt-4 px-10 max-w-[300px] mx-auto py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold ">
                 <button>Upload</button>
               </div>
             </div>
