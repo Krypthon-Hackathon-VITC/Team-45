@@ -26,8 +26,8 @@ const Login = () => {
       .then(data => {
         if (data.success) {
           // User is authenticated, do something
-          navigate('/home')
           console.log('User authenticated');
+          navigate('/home')
         } else {
           // User is not authenticated, prompt to register
           alert('Invalid email or password. Please register if you are not already a user.');
@@ -49,7 +49,7 @@ const Login = () => {
           onSubmit={handleSubmit}
           className=" max-w-[400px] w-full mx-auto bg-white p-4 rounded-xl"
         >
-          <h2 className=" text-4xl text-center font-bold py-6">uDecide</h2>
+          <h2 className=" text-4xl text-center font-bold py-6">Log in</h2>
           <div className=" flex flex-col py-2">
             <label htmlFor="username">Username</label>
             <input

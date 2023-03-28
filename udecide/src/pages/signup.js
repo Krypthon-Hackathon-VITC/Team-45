@@ -57,7 +57,7 @@ const Signup = () => {
           onSubmit={handleSubmit}
           className=" max-w-[400px] w-full mx-auto bg-white p-4 rounded-xl"
         >
-          <h2 className=" text-4xl text-center font-bold py-6">uDecide</h2>
+          <h2 className=" text-4xl text-center font-bold py-6">Sign Up</h2>
           <div className=" flex flex-col py-2">
             <label htmlFor="username">Username</label>
             <input

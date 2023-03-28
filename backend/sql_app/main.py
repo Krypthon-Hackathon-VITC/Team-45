@@ -49,7 +49,7 @@ def create_user(user: schema.UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/check_user/")
 def login_user(user: schema.UserFetch, db: Session = Depends(get_db)):
-    if(crud.check_user(db, user)):
-        return {"success": "true"}
+    if crud.check_user(db, user):
+        return {"success": True}
     else:
-        Response.status_code = 400
+        raise HTTPException(status_code=404, detail="User not found")
