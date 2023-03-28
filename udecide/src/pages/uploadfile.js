@@ -19,6 +19,23 @@ const UploadFile = () => {
         file.isUploading = true;
         setFiles([...files, file])
       }
+      const handleUpload = async (event) => {
+        event.preventDefault();
+        const formData = new FormData();
+        for (const file of files) {
+          formData.append('file', file);
+        }
+        try {
+          const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData,
+          });
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
 
     // const deleteFileHandler = (_name) => {
     //     axios.delete(`http://localhost:8080/upload?name=${_name}`)
@@ -44,14 +61,14 @@ const UploadFile = () => {
             <div className=' text-center'>
                 <form  className=' flex flex-col justify-between  mx-auto p-5'>
                     <div className='border-[2px] border-indigo-500 rounded-xl p-20 my-4 '>
-                        <div className=' relative  cursor-pointer py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold'>
-                        <input className=' relative z-10 opacity-0 max-w-[200px]' onChange={handleFile} type="file" name="file" multiple/>
-                        <button className=' absolute z-0 left-0 top-0 flex justify-center items-center  w-full h-full text-3xl text-white'><AiFillFileAdd size={50}  className=' inline '/></button>
+                        <div className='  relative  cursor-pointer py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold'>
+                        <input className=' cursor-pointer relative z-10 opacity-0 max-w-[200px]' onChange={handleFile} type="file" name="file" multiple/>
+                        <button className=' cursor-pointer absolute z-0 left-0 top-0 flex justify-center items-center  w-full h-full text-3xl text-white'><AiFillFileAdd size={50}  className=' inline '/></button>
                         </div>
                     </div>
                     
                     <div className=' border px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold '>
-                        <button>Upload</button>
+                        <button onClick={handleUpload}>Upload</button>
                     </div>
                 </form>
                 

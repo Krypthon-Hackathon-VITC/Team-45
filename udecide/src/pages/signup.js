@@ -15,7 +15,7 @@ const Signup = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    navigate('/login')
+    // navigate('/login')
     
 
     const emailRegex = /^\S+@\S+\.\S+$/;
@@ -24,6 +24,9 @@ const Signup = () => {
     if (!emailRegex.test(email)) {
       alert('Please enter a valid email address.');
       return;
+    }
+    else{
+      navigate('/login')
     }
 
 
