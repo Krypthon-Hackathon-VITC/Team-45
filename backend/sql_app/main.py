@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, File, HTTPException, UploadFile, Response
 from pydantic import UUID4, ValidationError
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
@@ -103,16 +103,17 @@ def add_image(file: UploadFile = File(...)):
         print(buffer)
         
         img = cv2.imread(buffer.name)
-        print(img)
+        # print(img)
         info = give_detection_results(img)
         print(info)
 
 
-    return {"Upload Image Status": info}
+    return {"Details": info}
 
 
-@app.post("/img")
-def upload_img(files: List[UploadFile] = File(...)):
+@app.post("/img/")
+def upload_img(files: list[UploadFile] ):
+
     file_and_data = {}
     for file in files:
         with open(f'{file.filename}', "wb") as buffer:
