@@ -1,11 +1,13 @@
-from fastapi import Depends, FastAPI, HTTPException
-from pydantic import ValidationError
+from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
+from pydantic import UUID4, ValidationError
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import crud, models, schema
 from . database import SessionLocal, engine
 from fastapi.openapi.models import Response
+import shutil
+import io
 
 # from passlib.context import CryptContext
 
@@ -53,3 +55,10 @@ def login_user(user: schema.UserFetch, db: Session = Depends(get_db)):
         return {"success": True}
     else:
         raise HTTPException(status_code=404, detail="User not found")
+    
+@app.post("/upload_img/")
+def add_image(file: UploadFile = File(...)):
+    with open(f'{file.filename}', 'wb') as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    return {"Upload Image Status": "completed"}
