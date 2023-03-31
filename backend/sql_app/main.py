@@ -63,7 +63,17 @@ def give_detection_results(image):
             extraction += ' '
     print(extraction)
 
-    info = extract_details_from_aadhar(extraction)
+    if detected_class == 'aadhar card':
+        info = extract_details_from_aadhar(extraction)
+    elif detected_class == 'driving license':
+        info = extract_details_from_aadhar(extraction)
+    elif detected_class == 'pan card':
+        return extraction
+    elif detected_class == 'salary slip':
+        info = extract_details_from_aadhar(extraction)
+    else:
+        info = extract_details_from_aadhar(extraction)
+
 
     return info
 
