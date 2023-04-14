@@ -2,6 +2,9 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import img2 from "../assets/home1-bg.jpg";
+import {MdCloudUpload,MdCameraEnhance} from 'react-icons/md'
+// import upload1 from "../assets/upload-1.png";
+// import upload2 from "../assets/upload-2.png";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -16,19 +19,35 @@ const Home = () => {
     <>
       <Navbar />
       <div className=" grid grid-cols-1 lg:grid-cols-2 h-screen w-full ">
-        <div className="w-full h-screen flex flex-col justify-center items-center">
-          <div className=" text-center mb-5">
-            <h1 className=" text-4xl font-bold">Document Classifier</h1>
-            <h3 className=" text-2xl font-medium my-6">
-              Verify your Documents in no time with us now
-            </h3>
+        <div className="w-full h-screen flex flex-col justify-around items-center py-24 px-16 text-[#1F1F1F] ">
+          <div className=" mb-5 flex flex-col  w-full">
+            <h1 className=" text-4xl text-center lg:text-left font-bold">Document Classifier</h1>
+            <h2 className="text-lg text-center lg:text-left font-medium mt-6 text-[#5D5D5D]">
+            djhfuiegfugeufgeufgdjhfuiegfugeufgeufgdjhfuiegfugeuf
+            </h2>
+            <h2 className="text-lg text-center lg:text-left font-medium text-[#5D5D5D]">geufgdjhfuiegfugeufgeufgdjhfuiegfugeufgeufgdjhfuiegf</h2>
+            <h2 className="text-lg text-center lg:text-left font-medium mb-6 text-[#5D5D5D]">gfugeufgeufg</h2>
           </div>
-          <div className=" w-full text-center flex justify-around">
-            <div className=" border px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold ">
+          <div className=" w-full text-center flex justify-center ">
+            <div className="   rounded-b-2xl rounded-tl-2xl mx-3 bg-gradient-to-br from-blue-600 to-purple-500">
+              <div className="  flex flex-col items-center m-1 rounded-b-2xl rounded-tl-2xl bg-white ">
+              <div className=" px-6 py-3 text-[#6961E9]">
+                <MdCloudUpload size={100}/>
+              </div>
+            <div className="  w-full py-2 bg-[#9E98F4] duration-200 hover:bg-[#6961E9] text-white rounded-b-2xl font-semibold ">
               <button onClick={handleUpload}>Upload Files</button>
             </div>
-            <div className=" border px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold ">
+            </div>
+            </div>
+            <div className="    rounded-b-2xl rounded-tr-2xl mx-3 bg-gradient-to-br from-blue-600 to-purple-500 ">
+              <div className=" flex flex-col items-center m-1 rounded-b-2xl rounded-tr-2xl bg-white ">
+            <div className=" px-6 py-3 text-[#6961E9]">
+                <MdCameraEnhance size={100}/>
+              </div>
+            <div className="  w-full py-2  bg-[#9E98F4] duration-200 hover:bg-[#6961E9] text-white rounded-b-2xl font-semibold ">
               <button onClick={handleWebUpload}>Web Cam</button>
+            </div>
+            </div>
             </div>
           </div>
         </div>

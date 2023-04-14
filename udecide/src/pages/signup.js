@@ -53,7 +53,7 @@ const Signup = () => {
   };
 
   return (
-    <div className=" grid grid-cols-1 xl:grid-cols-2 h-screen w-full">
+    <div className=" grid grid-cols-1 lg:grid-cols-2 h-screen w-full">
       <div className=" bg-gray-100 flex flex-col justify-center rounded-lg">
         <form
           action="/home"
@@ -114,7 +114,7 @@ const Signup = () => {
           </div>
         </form>
       </div>
-      <div className="hidden  xl:block rounded-lg">
+      <div className="hidden  lg:block rounded-lg">
         <img className=" w-full h-screen object-cover" src={img1} alt="" />
       </div>
     </div>

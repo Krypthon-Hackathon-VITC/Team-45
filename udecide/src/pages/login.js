@@ -39,8 +39,8 @@ const Login = () => {
   console.log("password:", password);
 
   return (
-    <div className=" grid grid-cols-1  xl:grid-cols-2 h-screen w-full">
-      <div className="hidden xl:block rounded-lg">
+    <div className=" grid grid-cols-1  lg:grid-cols-2 h-screen w-full">
+      <div className="hidden lg:block rounded-lg">
         <img className=" w-full h-screen object-cover" src={img} alt="" />
       </div>
       <div className=" bg-gray-100 flex flex-col justify-center rounded-lg">

@@ -88,80 +88,41 @@ const UploadFile = ({shareddataState,onStateDataChange}) => {
     <>
      <Navbar/>
      <div className=' grid grid-cols-1 lg:grid-cols-2 h-screen w-full '>
-     
+
       <div className='hidden sm:block rounded-lg'>
         <img className=' w-full h-full object-contain' src={img2} alt=''/>
-        
+
       </div>
 
       <div className=' w-full h-screen flex flex-col justify-center items-center'>
             <div className=' text-center text-4xl font-bold my-4'>
                 <h1>Upload Files for Verification</h1>
             </div>
-            <div className=' flex flex-row justify-center items-center'>
-              
             <div className=' text-center'>
-            <div className=' text-center text-2xl font-bold mt-3'>
-                <h1>Upload Aadhar Card</h1>
-            </div>
-                <form  className=' flex flex-col justify-between  mx-auto p-4'>
-                    <div className='border-[2px] border-indigo-500 rounded-xl p-16 my-4 '>
+                <form  className=' flex flex-col justify-between  mx-auto p-5'>
+                    <div className='border-[2px] border-indigo-500 rounded-xl p-20 my-4 '>
                         <div className='  relative  cursor-pointer py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold'>
                         <input className=' cursor-pointer relative z-10 opacity-0 max-w-[200px]' onChange={handleFile} type="file" name="file" multiple/>
                         <button className=' cursor-pointer absolute z-0 left-0 top-0 flex justify-center items-center  w-full h-full text-3xl text-white'><AiFillFileAdd size={50}  className=' inline '/></button>
                         </div>
                     </div>
-                    
+
                     <div className=' border px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold '>
                         <button onClick={handleUpload}>Upload</button>
                     </div>
                 </form>
-                <div className=' w-full flex flex-row justify-center items-center'>
+
+            </div>
+            <div className=' w-full flex flex-row justify-center items-center'>
             {
                 files &&
                 files.map(f => (<FileItem
                     key={f.name}
                     file={f}
                     removeFile={removeFileHandler} />))
-                    
+
             }
         </div>
-                
-            
-            
-        </div>
-        <div className=' text-center'>
-        <div className=' text-center text-2xl font-bold mt-3'>
-                <h1>Upload Pan Card</h1>
-            </div>
-                <form  className=' flex flex-col justify-between  mx-auto p-4'>
-                    <div className='border-[2px] border-indigo-500 rounded-xl p-16 my-4 '>
-                        <div className='  relative  cursor-pointer py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold'>
-                        <input className=' cursor-pointer relative z-10 opacity-0 max-w-[200px]' onChange={handleFiles} type="file" name="file" multiple/>
-                        <button className=' cursor-pointer absolute z-0 left-0 top-0 flex justify-center items-center  w-full h-full text-3xl text-white'><AiFillFileAdd size={50}  className=' inline '/></button>
-                        </div>
-                    </div>
-                    
-                    <div className=' border px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold '>
-                        <button onClick={handleUploader}>Upload</button>
-                    </div>
-                </form>
-                <div className=' w-full flex flex-row justify-center items-center'>
-            {
-                files1 &&
-                files1.map(f => (<FileItem
-                    key={f.name}
-                    file={f}
-                    removeFile={removeFile} />))
-                    
-            }
-        </div>
-            </div>
-            
-        </div>
-        <div className=' border px-10 py-5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold '>
-                        <button onClick={Submithandler} >Submit</button>
-                    </div>
         </div>
 
       </div>  
