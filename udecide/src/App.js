@@ -8,6 +8,9 @@ import UploadFile from './pages/uploadfile'
 import Webcam from './pages/webcamupload'
 import Anomaly from './pages/Anomalyresult'
 import React, {useState} from "react";
+import Anomalypage from "./pages/anomalypage";
+import Correctresult from "./pages/correctresult";
+import Incorrectresult from "./pages/incorrectresult";
 
 function App() {
 
@@ -30,6 +33,9 @@ function App() {
         <Routes>
         <Route exact path="/" element={<Login/>} />
         <Route exact path="/signup" element={<Signup/>} />
+        <Route exact path="/result" element={<Anomalypage/>} />
+        <Route exact path="/correctresult" element={<Correctresult/>} />
+        <Route exact path="/incorrectresult" element={<Incorrectresult/>} />
         <Route exact path="/appform" element={<ApplicationForm sharedState={sharedState} onStateChange={handleStateChange}/>} />
         <Route exact path="/home" element={<Home/>} />
         <Route exact path="/upload_page" element={<UploadFile shareddataState={shareddataState} onStateDataChange={handleStateDataChange}/>} />

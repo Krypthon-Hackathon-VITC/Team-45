@@ -87,14 +87,14 @@ const UploadFile = ({shareddataState,onStateDataChange}) => {
   return (
     <>
      <Navbar/>
-     <div className=' grid grid-cols-1 lg:grid-cols-2 h-screen w-full '>
+     <div className=' grid grid-cols-1 lg:grid-cols-2 h-[90vh] w-full '>
 
       <div className='hidden sm:block rounded-lg'>
         <img className=' w-full h-full object-contain' src={img2} alt=''/>
 
       </div>
 
-      <div className=' w-full h-screen flex flex-col justify-center items-center'>
+      <div className=' w-full h-[90vh] flex flex-col justify-center items-center'>
             <div className=' text-center text-4xl font-bold my-4'>
                 <h1>Upload Files for Verification</h1>
             </div>

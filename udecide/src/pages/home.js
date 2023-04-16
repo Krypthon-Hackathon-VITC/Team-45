@@ -18,15 +18,15 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className=" grid grid-cols-1 lg:grid-cols-2 h-screen w-full ">
-        <div className="w-full h-screen flex flex-col justify-around items-center py-24 px-16 text-[#1F1F1F] ">
+      <div className=" grid grid-cols-1 lg:grid-cols-2 h-[90vh] w-full ">
+        <div className="w-full h-[90vh] flex flex-col justify-around items-center py-20 px-16 text-[#1F1F1F] ">
           <div className=" mb-5 flex flex-col  w-full">
-            <h1 className=" text-4xl text-center lg:text-left font-bold">Document Classifier</h1>
-            <h2 className="text-lg text-center lg:text-left font-medium mt-6 text-[#5D5D5D]">
+            <h1 className=" text-5xl text-center lg:text-left font-bold">Document Classifier</h1>
+            <h2 className="text-md text-center lg:text-left font-medium mt-6 text-[#5D5D5D]">
             djhfuiegfugeufgeufgdjhfuiegfugeufgeufgdjhfuiegfugeuf
             </h2>
-            <h2 className="text-lg text-center lg:text-left font-medium text-[#5D5D5D]">geufgdjhfuiegfugeufgeufgdjhfuiegfugeufgeufgdjhfuiegf</h2>
-            <h2 className="text-lg text-center lg:text-left font-medium mb-6 text-[#5D5D5D]">gfugeufgeufg</h2>
+            <h2 className="text-md text-center lg:text-left font-medium text-[#5D5D5D]">geufgdjhfuiegfugeufgeufgdjhfuiegfugeufgeufgdjhfuiegf</h2>
+            <h2 className="text-md text-center lg:text-left font-medium mb-6 text-[#5D5D5D]">gfugeufgeufg</h2>
           </div>
           <div className=" w-full text-center flex justify-center ">
             <div className="   rounded-b-2xl rounded-tl-2xl mx-3 bg-gradient-to-br from-blue-600 to-purple-500">

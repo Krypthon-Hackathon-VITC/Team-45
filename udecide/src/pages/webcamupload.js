@@ -16,7 +16,7 @@ const WebCam = () => {
       <Navbar />
       <div>
         <div className="w-full h-full flex flex-col justify-center items-center">
-          <div className=" mt-16">{/* <h1>Upload Using WebCam</h1> */}</div>
+          <div className=" ">{/* <h1>Upload Using WebCam</h1> */}</div>
           <div className=" text-center ">
             <div className=" ">
               <Webcam ref={webRef} height={400} className=" max-h-[450px]" />

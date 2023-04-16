@@ -13,7 +13,7 @@ const Navbar = () => {
     setLogo(!logo);
   };
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-[10vh]">
       <div className="flex flex-row w-full justify-between   items-center h-20 px-10 absolute z-10 font-Montserrat ">
         <div className="text-[#2176AE]">
           <h1 className={logo ? " hidden" : "flex text-3xl font-black  "}>
