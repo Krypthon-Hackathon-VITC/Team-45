@@ -113,11 +113,6 @@ class AddImage(db.Model):
     data = db.Column(db.LargeBinary)
 
 
-# Test route for CORS
-@app.route("/test_cors", methods=["GET"])
-def test_cors():
-    return jsonify({"message": "CORS is working!"})
-
 
 @app.route("/signup", methods = ["POST", "GET"])
 def user():
@@ -129,7 +124,6 @@ def user():
         user_name = data.get('username')
         user_password = data.get('password')
 
-
         # Check if the email or username is already taken
         existing_user = User.query.filter_by(email=user_email).first()
         if existing_user:
@@ -139,7 +133,9 @@ def user():
         if existing_username:
             return jsonify({"error": "Username already taken."}), 400
 
-        
+        # Ensure the password meets complexity requirements (e.g., minimum length)
+        if len(user_password) < 8:
+            return jsonify({"error": "Password must be at least 8 characters long."}), 400
         encrypted_password = bcrypt.generate_password_hash(user_password)
 
         # adding user to the database
@@ -163,22 +159,6 @@ def user():
     return "Login page"
 
 
-# @app.route('/signup', methods=['POST'])
-# def signup():
-#     data = request.get_json()
-#     username = data.get('username')
-#     password = data.get('password')
-#     email = data.get('email')
-
-#     if not username or not password:
-#         return jsonify({'error': 'Username and password are required'}), 400
-
-#     user = {'username': username, 'password': password}
-#     # users.append(user)
-
-#     return jsonify({'message': 'User signed up successfully'}), 200
-
-
 @app.route("/login", methods = ['POST', 'GET'])
 def login():
     email = request.form.get('email')
@@ -189,7 +169,6 @@ def login():
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
     if not user or not check_password_hash(user.password, password):
-        flash('Please check your login details and try again.')
         return {"Error": "Please check your login details and try again"}
         # return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
