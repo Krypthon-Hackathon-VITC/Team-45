@@ -1,7 +1,7 @@
-from flask import Flask, request, flash
+from flask import Flask, request, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt, check_password_hash
 
 from model_utils import allowed_file, extract_details_from_aadhar, get_cropped_image, extract_details_from_pan_except_name, extract_name_part_from_pancard
 
@@ -13,6 +13,7 @@ from matplotlib import pyplot as plt
 from paddleocr import PaddleOCR
 import base64
 import io
+from flask_cors import CORS
 
 
 model = torch.hub.load('ultralytics/yolov5', 'custom', path = 'model-weights/150-epochs-best.pt', force_reload = True)
@@ -88,7 +89,7 @@ def give_detection_results(image):
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///document-extraction.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 # create an instance of bcrypt
 bcrypt = Bcrypt(app)
 
@@ -112,19 +113,29 @@ class AddImage(db.Model):
     data = db.Column(db.LargeBinary)
 
 
-@app.route("/")
-def test():
-    return "hello world"
 
-
-@app.route("/login", methods = ["POST", "GET"])
+@app.route("/signup", methods = ["POST", "GET"])
 def user():
 
     if request.method == 'POST':
-        user_name = request.form['name']
-        user_email = request.form['email']
-        user_password = request.form['password']
 
+        data = request.get_json()
+        user_email = data.get('email')
+        user_name = data.get('username')
+        user_password = data.get('password')
+
+        # Check if the email or username is already taken
+        existing_user = User.query.filter_by(email=user_email).first()
+        if existing_user:
+            return jsonify({"error": "Email already registered."}), 400
+
+        existing_username = User.query.filter_by(name=user_name).first()
+        if existing_username:
+            return jsonify({"error": "Username already taken."}), 400
+
+        # Ensure the password meets complexity requirements (e.g., minimum length)
+        if len(user_password) < 8:
+            return jsonify({"error": "Password must be at least 8 characters long."}), 400
         encrypted_password = bcrypt.generate_password_hash(user_password)
 
         # adding user to the database
@@ -141,11 +152,28 @@ def user():
         
         return {
             "retrieved_email" : str(user_email),
-            "retrieved_password" : str(user_password),
+            "retrieved_password" : str(encrypted_password),
             "retrieved_name" : str(user_name)
         }
 
     return "Login page"
+
+
+@app.route("/login", methods = ['POST', 'GET'])
+def login():
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    user = User.query.filter_by(email=email).first()
+
+    # check if the user actually exists
+    # take the user-supplied password, hash it, and compare it to the hashed password in the database
+    if not user or not check_password_hash(user.password, password):
+        return {"Error": "Please check your login details and try again"}
+        # return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
+
+    return {"fffsf" : "Successful login"}
+    
 
 
 @app.route("/uploadImage", methods = ["GET", "POST"])

@@ -26,7 +26,26 @@ const Signup = () => {
       return;
     }
     else{
+      const userObject = {
+        username: username,
+        email: email,
+        password: password
+      };
+      // Make HTTP request to server-side endpoint
+          fetch("http://127.0.0.1:5000/signup", {
+            method: "POST",
+            // mode : "no-cors",
+            body: JSON.stringify(userObject),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((error) => console.error(error));
+  
       navigate('/appform')
+
     }
 
 
@@ -34,22 +53,7 @@ const Signup = () => {
     //   alert('Password must be at least 8 characters long and contain at least one letter and one number.');
     //   return;
     // }
-
-    // Make HTTP request to server-side endpoint
-        fetch("http://127.0.0.1:8000/users/", {
-          method: "POST",
-          body: JSON.stringify({ username, email, password }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.error(error));
-
-    console.log("username:", username);
-    console.log("email:", email);
-    console.log("password:", password);
+    
   };
 
   return (
