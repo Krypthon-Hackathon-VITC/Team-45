@@ -10,31 +10,37 @@ const UploadFile = ({shareddataState,onStateDataChange}) => {
 
   const navigate = useNavigate ();
 
-    const[files,setFiles]=useState([])
-    const[files1,setFiles1]=useState([])
+    const[files,setFiles]=useState(null)
     const[datares,setDatares]=useState({})
-    const[datares1,setDatares1]=useState({})
+    
 
     const removeFileHandler = (filename) => {
         setFiles(files.filter(file => file.name !== filename))
       }
     
-      const handleFile= (event) => {
-        const file = event.target.files[0];
-        if(!file) return;
-        file.isUploading = true;
-        setFiles([...files, file])
-      }
+      // const handleFile= (event) => {
+      //   const file = event.target.files;
+      //   if(!file) return;
+      //   file.isUploading = true;
+      //   setFiles([file])
+      // }
       const handleUpload = async (event) => {
         event.preventDefault();
-        const formData = new FormData();
-        for (const file of files) {
-          formData.append('file', file);
+        if(!files){
+          return;
         }
+        const formData = new FormData();
+        // formData.append('file',files)
+        // formData.append('fileName', files.name);
+        for (let i=0;i<files.length;i++) {
+          formData.append(`file`, files[i]);
+        }
+        console.log("fileForm",formData)
         try {
-          const response = await fetch('http://127.0.0.1:8000/upload_img/', {
+          const response = await fetch('http://192.168.1.13:5000/extract_details', {
             method: 'POST',
             body: formData,
+            
           });
           const data = await response.json();
           console.log(data);
@@ -45,43 +51,13 @@ const UploadFile = ({shareddataState,onStateDataChange}) => {
         }
       };
 
-      const removeFile = (filename) => {
-        setFiles1(files1.filter(file1 => file1.name !== filename))
-      }
+      
     
-      const handleFiles= (event) => {
-        const file1 = event.target.files[0];
-        if(!file1) return;
-        file1.isUploading = true;
-        setFiles1([...files1, file1])
-      }
-      const handleUploader = async (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        for (const file1 of files1) {
-          formData.append('file', file1);
-        }
-        try {
-          const response = await fetch('http://127.0.0.1:8000/upload_img/', {
-            method: 'POST',
-            body: formData,
-          });
-          const data = await response.json();
-          console.log(data);
-          setDatares1(data.Details)
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      const Submithandler=()=>{
-        const datafile = [datares,datares1]
-        onStateDataChange(datafile)
-        navigate('/anomalypage')
-      }
-    
+      
+      
+    // let filedata = [files[0].name]
     console.log("File:",files)
-    console.log("Filedata1:",datares)
-    console.log("Filedat2:",datares1)
+    // console.log("Filedata1:",filedata)
 
 
   return (
@@ -102,7 +78,7 @@ const UploadFile = ({shareddataState,onStateDataChange}) => {
                 <form  className=' flex flex-col justify-between  mx-auto p-5'>
                     <div className='border-[2px] border-indigo-500 rounded-xl p-20 my-4 '>
                         <div className='  relative  cursor-pointer py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl font-semibold'>
-                        <input className=' cursor-pointer relative z-10 opacity-0 max-w-[200px]' onChange={handleFile} type="file" name="file" multiple/>
+                        <input className=' cursor-pointer relative z-10 opacity-0 max-w-[200px]' onChange={(e)=>setFiles(e.target.files)} type="file" name="file" multiple/>
                         <button className=' cursor-pointer absolute z-0 left-0 top-0 flex justify-center items-center  w-full h-full text-3xl text-white'><AiFillFileAdd size={50}  className=' inline '/></button>
                         </div>
                     </div>
@@ -113,7 +89,7 @@ const UploadFile = ({shareddataState,onStateDataChange}) => {
                 </form>
 
             </div>
-            <div className=' w-full flex flex-row justify-center items-center'>
+            {/* <div className=' w-full flex flex-row justify-center items-center'>
             {
                 files &&
                 files.map(f => (<FileItem
@@ -122,7 +98,7 @@ const UploadFile = ({shareddataState,onStateDataChange}) => {
                     removeFile={removeFileHandler} />))
 
             }
-        </div>
+        </div> */}
         </div>
 
       </div>  
