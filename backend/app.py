@@ -90,6 +90,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///document-extraction.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+# CORS(app)
 # create an instance of bcrypt
 bcrypt = Bcrypt(app)
 
@@ -172,24 +173,29 @@ def login():
         return {"Error": "Please check your login details and try again"}
         # return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
-    return {"fffsf" : "Successful login"}
+    return {"Message" : "Successful login"}
+    
     
 
-
-@app.route("/uploadImage", methods = ["GET", "POST"])
+@app.route("/uploadImage", methods=["POST", "GET"])
 def uploadImage():
-
     if request.method == 'POST':
-        file = request.files['file']
+        files = request.files.getlist('file')
 
-        new_file_upload = AddImage(filename = file.filename, data = file.read())
-        db.session.add(new_file_upload)
-        db.session.commit()
+        for file in files:
+            new_file_upload = AddImage(filename=file.filename, data=file.read())
+            db.session.add(new_file_upload)
+            db.session.commit()
+
         list_of_images = AddImage.query.all()
-        # print(list_of_images)
         for i in list_of_images:
             print(i.filename)
-        return {"Uploaded" : f"{file.filename}"}
+
+        return {"Uploaded": [file.filename for file in files]}
+
+    elif request.method == 'GET':
+        return {"message": "GET request received. Use POST to upload files."}
+
     
 
 @app.route('/extract_details', methods = ['GET',"POST"])
@@ -199,10 +205,10 @@ def extract_details():
     
     if request.method == 'POST':
         
-        if 'files[]' not in request.files:
+        if 'file' not in request.files:
             return {"Error" : "No file part"}
         
-        files = request.files.getlist('files[]')
+        files = request.files.getlist('file')
         print(files)
 
 
